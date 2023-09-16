@@ -20,14 +20,12 @@ const shoppingList = document.getElementById("shopping-list");
 addButton.addEventListener("click", function () {
   let inputValue = inputField.value;
   push(shoppingListInDB, inputValue);
-  inputField.value = "";
-  shoppingList.innerHTML += `<li>${inputValue}</li>`;
   clearInputField();
 });
 
 onValue(shoppingListInDB, function (snapshot) {
-  let shoppingItem = Object.values(snapshot.val());
-
+  let shoppingItem = Object.entries(snapshot.val());
+  console.log(shoppingItem);
   clearShoppingList();
   for (let i = 0; i < shoppingItem.length; i++) {
     let currentItem = shoppingItem[i];
@@ -36,7 +34,7 @@ onValue(shoppingListInDB, function (snapshot) {
 });
 
 function clearShoppingList() {
-  shoppingList = "";
+  shoppingList.innerHTML = "";
 }
 
 function clearInputField() {
@@ -44,5 +42,7 @@ function clearInputField() {
 }
 
 function addItem(item) {
-  shoppingList.innerHTML += `<li>${item}</li>`;
+  let newItem = document.createElement("li");
+  newItem.textContent = item[1];
+  shoppingList.append(newItem);
 }
