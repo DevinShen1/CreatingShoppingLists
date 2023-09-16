@@ -4,6 +4,7 @@ import {
   ref,
   push,
   onValue,
+  remove,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 const appSetting = {
@@ -44,5 +45,10 @@ function clearInputField() {
 function addItem(item) {
   let newItem = document.createElement("li");
   newItem.textContent = item[1];
+
+  newItem.addEventListener("dblclick", function () {
+    let itemLocation = ref(database, `ShoppingList/${item[0]}`);
+    remove(itemLocation);
+  });
   shoppingList.append(newItem);
 }
