@@ -25,12 +25,15 @@ addButton.addEventListener("click", function () {
 });
 
 onValue(shoppingListInDB, function (snapshot) {
-  let shoppingItem = Object.entries(snapshot.val());
-  console.log(shoppingItem);
-  clearShoppingList();
-  for (let i = 0; i < shoppingItem.length; i++) {
-    let currentItem = shoppingItem[i];
-    addItem(currentItem);
+  if (snapshot.exists()) {
+    let shoppingItem = Object.entries(snapshot.val());
+    clearShoppingList();
+    for (let i = 0; i < shoppingItem.length; i++) {
+      let currentItem = shoppingItem[i];
+      addItem(currentItem);
+    }
+  } else {
+    shoppingList.innerHTML = "No item";
   }
 });
 
